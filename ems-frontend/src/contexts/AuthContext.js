@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'https://ems-backend-s1rb.onrender.com';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const AuthContext = createContext();
