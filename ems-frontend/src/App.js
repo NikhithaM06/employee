@@ -15,11 +15,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Spinner from './components/Spinner';
 
-function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
-  if (loading) return <Spinner />;
-  return user ? children : <Navigate to="/login" replace />;
-}
+
 
 function AuthRoute({ children }) {
   const { user, loading } = useAuth();

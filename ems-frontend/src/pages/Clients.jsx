@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const cardColors = ['from-sky-500', 'from-emerald-500', 'from-orange-500', 'from-fuchsia-500', 'from-cyan-500'];
@@ -32,7 +32,7 @@ export default function Clients() {
     loadClients();
   }, []);
 
-  const clientCount = useMemo(() => clients.length, [clients]);
+
   const accentForClient = (index) => cardColors[index % cardColors.length];
 
   const openDetails = (client) => setSelectedClient(client);
