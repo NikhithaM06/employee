@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import apiFetch from '../utils/api';
 import EmployeeForm from '../components/EmployeeForm';
 
 const blankEmployee = {
@@ -24,7 +25,7 @@ export default function AddEmployee() {
     setSubmitting(true);
     setError('');
     try {
-      const response = await fetch('/api/employees', {
+      const response = await apiFetch('/api/employees', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -14,6 +14,7 @@ import {
 import StatCard from '../components/StatCard';
 import Spinner from '../components/Spinner';
 import EmptyState from '../components/EmptyState';
+import apiFetch from '../utils/api';
 
 const monthLabels = [
   'Jan',
@@ -50,8 +51,8 @@ export default function Dashboard() {
       setError('');
       try {
         const [statsResponse, clientsResponse] = await Promise.all([
-          fetch('/api/employees/stats'),
-          fetch('/api/clients'),
+          apiFetch('/api/employees/stats'),
+          apiFetch('/api/clients'),
         ]);
 
         if (!statsResponse.ok) {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import apiFetch from '../utils/api';
 
 export default function Employees() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Employees() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/employees');
+        const response = await apiFetch('/api/employees');
         if (!response.ok) {
           throw new Error('Failed to load employees');
         }
@@ -43,7 +44,7 @@ export default function Employees() {
     }
 
     try {
-      const response = await fetch(`/api/employees/${id}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/employees/${id}`, { method: 'DELETE' });
       if (!response.ok) {
         throw new Error('Unable to delete employee');
       }

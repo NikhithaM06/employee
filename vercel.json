@@ -7,10 +7,14 @@
       "config": { "distDir": "build" }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "ems-frontend/$1"
+      "source": "/api/(.*)",
+      "destination": "https://ems-backend-5r5w.onrender.com/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/ems-frontend/$1"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import apiFetch from '../utils/api';
 
 const domainFilters = [
   { label: 'All', value: 'All' },
@@ -19,7 +20,7 @@ export default function PastEmployees() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/employees?status=past');
+        const response = await apiFetch('/api/employees?status=past');
         if (!response.ok) {
           throw new Error('Unable to load past employees');
         }

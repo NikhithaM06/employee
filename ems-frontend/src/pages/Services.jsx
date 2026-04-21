@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import apiFetch from '../utils/api';
 
 const serviceAccent = {
   Apps: 'from-sky-500',
@@ -17,7 +18,7 @@ export default function Services() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/services');
+        const response = await apiFetch('/api/services');
         if (!response.ok) {
           throw new Error('Unable to load services');
         }

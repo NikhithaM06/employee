@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import apiFetch from '../utils/api';
 
 const domainFilters = [
   { label: 'All', value: 'All' },
@@ -23,7 +24,7 @@ export default function ManageEmployees() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/employees?status=active');
+        const response = await apiFetch('/api/employees?status=active');
         if (!response.ok) {
           throw new Error('Unable to load active employees');
         }
@@ -58,7 +59,7 @@ export default function ManageEmployees() {
     }
 
     try {
-      const response = await fetch(`/api/employees/${id}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/employees/${id}`, { method: 'DELETE' });
       if (!response.ok) {
         throw new Error('Unable to delete employee');
       }
@@ -77,7 +78,7 @@ export default function ManageEmployees() {
     }
 
     try {
-      const response = await fetch(`/api/employees/${id}/markpast`, { method: 'PATCH' });
+      const response = await apiFetch(`/api/employees/${id}/markpast`, { method: 'PATCH' });
       if (!response.ok) {
         throw new Error('Unable to mark employee as past');
       }

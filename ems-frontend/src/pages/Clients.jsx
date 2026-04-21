@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import apiFetch from '../utils/api';
 
 const cardColors = ['from-sky-500', 'from-emerald-500', 'from-orange-500', 'from-fuchsia-500', 'from-cyan-500'];
 
@@ -17,7 +18,7 @@ export default function Clients() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/clients');
+        const response = await apiFetch('/api/clients');
         if (!response.ok) {
           throw new Error('Unable to load clients');
         }
@@ -52,7 +53,7 @@ export default function Clients() {
         throw new Error('All fields are required');
       }
 
-      const response = await fetch('/api/clients', {
+      const response = await apiFetch('/api/clients', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formState)

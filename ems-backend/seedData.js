@@ -8,6 +8,10 @@ dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/ems';
 
+if (!process.env.MONGO_URI) {
+  console.warn('⚠️ MONGO_URI not found in .env, using default local connection.');
+}
+
 const employees = [
   {
     name: 'Arjun Singh',
@@ -224,7 +228,7 @@ const services = [
 async function seed() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('Connected to MongoDB for seeding');
+    console.log(`📡 Connected to MongoDB: ${MONGO_URI.split('@').pop().split('/')[0]} (Seeding mode)`);
 
     // Clear existing data
     await Employee.deleteMany({});

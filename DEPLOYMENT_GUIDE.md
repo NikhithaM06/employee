@@ -41,12 +41,13 @@ git push origin main
 2.  Click **"Add New..."** -> **"Project"**.
 3.  Import your GitHub repository.
 4.  **Configure the Project**:
-    - **Root Directory**: `ems-frontend`
+    - **Root Directory**: Leave it as the root (`.`) or set to `ems-frontend` if you import it specifically. 
     - **Framework Preset**: `Create React App`
 5.  **Environment Variables**:
-    - `REACT_APP_API_URL`: https://ems-backend-5r5w.onrender.com
-    - `CI`: `false` (Add this if your build fails due to ESLint warnings)
-6.  Click **"Deploy"**.
+    - `REACT_APP_API_URL`: Your Render URL (e.g., `https://ems-backend-5r5w.onrender.com`)
+    - `CI`: `false`
+6.  **Rewrite Fallback**: I have configured a `vercel.json` at the root that automatically handles the `/api` routing. This means you don't need to change any URLs in your code!
+7.  Click **"Deploy"**.
 7.  Once finished, you will get a public link (e.g., `https://ems-frontend.vercel.app`).
 
 ---
