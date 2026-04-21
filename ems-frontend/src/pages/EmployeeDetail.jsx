@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import apiFetch from '../utils/api';
 import EmployeeForm from '../components/EmployeeForm';
 
 export default function EmployeeDetail() {
@@ -17,7 +18,7 @@ export default function EmployeeDetail() {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch(`/api/employees/${id}`);
+        const response = await apiFetch(`/api/employees/${id}`);
         if (!response.ok) {
           throw new Error('Employee not found');
         }
@@ -37,7 +38,7 @@ export default function EmployeeDetail() {
     setSaving(true);
     setError('');
     try {
-      const response = await fetch(`/api/employees/${id}`, {
+      const response = await apiFetch(`/api/employees/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData)
