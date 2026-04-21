@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Employee = require('../models/Employee');
 
 const router = express.Router();
@@ -137,15 +138,26 @@ router.get('/stats', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id);
-    if (!employee) {
-      return res.status(404).json({ message: 'Employee not found' });
+    // 1. Try finding in MongoDB if the ID is a valid ObjectId
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      const employee = await Employee.findById(req.params.id);
+      if (employee) {
+        return res.json(employee);
+      }
     }
-    res.json(employee);
+
+    // 2. Fallback to default employees if not found or if ID is a string (like 'default-1')
+    const defaultEmp = defaultEmployees.find(emp => emp._id === req.params.id);
+    if (defaultEmp) {
+      return res.json(defaultEmp);
+    }
+
+    res.status(404).json({ message: 'Employee not found' });
   } catch (error) {
+    console.error('Error fetching employee:', error);
     res.status(500).json({
       message: 'Unable to load employee',
-      error
+      error: error.message
     });
   }
 });
@@ -192,9 +204,12 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const updateData = {};
-    const allowedFields = ['name', 'age', 'experience', 'salary', 'previousCompany', 'domain', 'skills', 'image', 'status'];
+    // Prevent modification of default employees
+    if (req.params.id.startsWith('default-')) {
+      return res.status(403).json({ message: 'Sample employees cannot be modified. Please create a new employee to test this feature.' });
+    }
 
+    const updateData = {};
     allowedFields.forEach(field => {
       if (req.body[field] !== undefined) {
         updateData[field] = req.body[field];
@@ -204,7 +219,6 @@ router.put('/:id', async (req, res) => {
     if (updateData.skills && typeof updateData.skills === 'string') {
       updateData.skills = updateData.skills.split(',').map(skill => skill.trim()).filter(Boolean);
     }
-
     const employee = await Employee.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
@@ -213,13 +227,18 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: 'Unable to update employee',
-      error
+      error: error.message || error
     });
   }
 });
 
 router.delete('/:id', async (req, res) => {
   try {
+    // Prevent deletion of default employees
+    if (req.params.id.startsWith('default-')) {
+      return res.status(403).json({ message: 'Sample employees cannot be deleted.' });
+    }
+
     const employee = await Employee.findByIdAndDelete(req.params.id);
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
@@ -228,7 +247,7 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: 'Unable to delete employee',
-      error
+      error: error.message || error
     });
   }
 });

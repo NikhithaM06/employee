@@ -19,10 +19,12 @@ export default function EmployeeDetail() {
       setError('');
       try {
         const response = await apiFetch(`/api/employees/${id}`);
-        if (!response.ok) {
-          throw new Error('Employee not found');
-        }
         const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Employee not found');
+        }
+        
         setEmployee(data);
       } catch (fetchError) {
         setError(fetchError.message || 'Unable to load employee profile');

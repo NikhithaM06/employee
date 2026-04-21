@@ -4,7 +4,9 @@ const API_URL = process.env.REACT_APP_API_URL || '';
  * Enhanced fetch wrapper that prepends the API URL and handles common headers.
  */
 export const apiFetch = async (endpoint, options = {}) => {
-  const url = endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`;
+  const url = endpoint.startsWith('http') 
+    ? endpoint 
+    : `${API_URL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
   
   const headers = {
     'Content-Type': 'application/json',
