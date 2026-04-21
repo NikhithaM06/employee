@@ -4,6 +4,9 @@ const Employee = require('../models/Employee');
 
 const router = express.Router();
 
+const allowedFields = ['name', 'age', 'experience', 'salary', 'previousCompany', 'domain', 'skills', 'image', 'status', 'leftDate'];
+
+
 const defaultEmployees = [
   {
     _id: 'default-1',
@@ -232,6 +235,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
 router.delete('/:id', async (req, res) => {
   try {
     // Prevent deletion of default employees
@@ -254,17 +258,33 @@ router.delete('/:id', async (req, res) => {
 
 router.patch('/:id/markpast', async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(req.params.id, { status: 'past' }, { new: true });
+    // Prevent modification of default employees
+    if (req.params.id.startsWith('default-')) {
+      return res.status(403).json({ 
+        message: 'Sample employees cannot be moved to past status. Please create a new employee to test this feature.' 
+      });
+    }
+
+    const { leftDate } = req.body;
+    const employee = await Employee.findById(req.params.id);
+    
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
+
+    employee.status = 'past';
+    employee.leftDate = leftDate ? new Date(leftDate) : new Date();
+    
+    await employee.save();
     res.json(employee);
   } catch (error) {
     res.status(400).json({
       message: 'Unable to mark employee as past',
-      error
+      error: error.message || error
     });
   }
 });
+
+
 
 module.exports = router;

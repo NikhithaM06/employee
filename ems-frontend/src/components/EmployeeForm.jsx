@@ -11,7 +11,9 @@ export default function EmployeeForm({ initialData = {}, onSubmit, submitLabel, 
   const [skills, setSkills] = useState((initialData.skills && initialData.skills.join(', ')) || '');
   const [salary, setSalary] = useState(initialData.salary || '');
   const [image, setImage] = useState(initialData.image || '');
+  const [leftDate, setLeftDate] = useState(initialData.leftDate ? new Date(initialData.leftDate).toISOString().split('T')[0] : '');
   const [fileLabel, setFileLabel] = useState('Choose an image file');
+
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -23,7 +25,9 @@ export default function EmployeeForm({ initialData = {}, onSubmit, submitLabel, 
     setSkills((initialData.skills && initialData.skills.join(', ')) || '');
     setSalary(initialData.salary || '');
     setImage(initialData.image || '');
+    setLeftDate(initialData.leftDate ? new Date(initialData.leftDate).toISOString().split('T')[0] : '');
     setFileLabel('Choose an image file');
+
     setErrors({});
   }, [initialData]);
 
@@ -74,8 +78,10 @@ export default function EmployeeForm({ initialData = {}, onSubmit, submitLabel, 
       skills: skills.split(',').map((skill) => skill.trim()).filter(Boolean),
       salary: Number(salary),
       image,
-      status: initialData.status || 'active'
+      status: initialData.status || 'active',
+      leftDate: (initialData.status === 'past' || leftDate) ? leftDate : undefined
     });
+
   };
 
   return (
@@ -167,7 +173,20 @@ export default function EmployeeForm({ initialData = {}, onSubmit, submitLabel, 
           {errors.previousCompany && <p className="text-sm text-red-600">{errors.previousCompany}</p>}
         </label>
 
+        {initialData.status === 'past' && (
+          <label className="space-y-2 md:col-span-2">
+            <span className="block text-sm font-medium text-slate-700">Left Date</span>
+            <input
+              type="date"
+              value={leftDate}
+              onChange={(event) => setLeftDate(event.target.value)}
+              className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+            />
+          </label>
+        )}
+
         <label className="space-y-2 md:col-span-2">
+
           <span className="block text-sm font-medium text-slate-700">Profile Image</span>
           <div className="grid gap-4 md:grid-cols-[1fr_auto]">
             <input

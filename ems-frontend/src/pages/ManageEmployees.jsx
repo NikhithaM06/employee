@@ -73,14 +73,27 @@ export default function ManageEmployees() {
   };
 
   const handleMarkPast = async (id) => {
-    if (!window.confirm('Mark this employee as past?')) {
+    if (id.startsWith('default-')) {
+      toast.info('Sample employees cannot be moved to past status. Please create a new employee to test this feature.');
       return;
     }
 
+    const defaultDate = new Date().toISOString().split('T')[0];
+    const leftDateStr = window.prompt('Enter departure date (YYYY-MM-DD):', defaultDate);
+
+    if (leftDateStr === null) return; // User cancelled
+
     try {
-      const response = await apiFetch(`/api/employees/${id}/markpast`, { method: 'PATCH' });
+      const response = await apiFetch(`/api/employees/${id}/markpast`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leftDate: leftDateStr })
+      });
+
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Unable to mark employee as past');
+        throw new Error(data.message || 'Unable to mark employee as past');
       }
       setEmployees((current) => current.filter((employee) => employee._id !== id));
       toast.success('Employee marked as past');
@@ -90,6 +103,8 @@ export default function ManageEmployees() {
       toast.error(message);
     }
   };
+
+
 
   return (
     <div className="space-y-6">
