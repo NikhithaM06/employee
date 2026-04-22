@@ -10,50 +10,63 @@ const navItems = [
   { name: 'Services', to: '/services' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const { logout, user } = useAuth();
 
   return (
-    <aside className="w-full md:w-72 flex-shrink-0 bg-slate-950 text-slate-100 md:min-h-screen">
-      <div className="mx-auto flex max-w-md flex-col gap-6 px-5 py-8 md:px-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500 text-xl font-semibold text-slate-950">
-            EMS
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+          onClick={onClose}
+        />
+      )}
+      <aside className={`w-full md:w-72 flex-shrink-0 bg-slate-950 text-slate-100 md:min-h-screen fixed md:static top-0 left-0 h-full z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300`}>
+        <div className="mx-auto flex max-w-md flex-col gap-6 px-5 py-8 md:px-6 h-full">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500 text-xl font-semibold text-slate-950">
+              EMS
+            </div>
+            <div>
+              <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Employee</p>
+              <h1 className="text-xl font-semibold">Management</h1>
+            </div>
           </div>
-          <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Employee</p>
-            <h1 className="text-xl font-semibold">Management</h1>
-          </div>
-        </div>
 
-        <nav className="space-y-1">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center rounded-3xl px-4 py-3 text-sm font-medium transition ${
-                  isActive
-                    ? 'bg-slate-100 text-slate-950 shadow-sm'
-                    : 'text-slate-300 hover:bg-slate-900 hover:text-white'
-                }`
-              }
+          <nav className="space-y-1 flex-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex items-center rounded-3xl px-4 py-3 text-sm font-medium transition ${
+                    isActive
+                      ? 'bg-slate-100 text-slate-950 shadow-sm'
+                      : 'text-slate-300 hover:bg-slate-900 hover:text-white'
+                  }`
+                }
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="mt-auto">
+            <p className="text-sm text-slate-400 mb-2">Logged in as: {user?.email}</p>
+            <button
+              onClick={() => {
+                logout();
+                onClose();
+              }}
+              className="w-full rounded-3xl px-4 py-3 text-sm font-medium text-white transition hover:bg-red-700 bg-red-600"
             >
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="mt-auto">
-          <p className="text-sm text-slate-400 mb-2">Logged in as: {user?.email}</p>
-          <button
-            onClick={logout}
-            className="w-full flex items-center rounded-3xl px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-900 hover:text-white transition"
-          >
-            Logout
-          </button>
+              Logout
+            </button>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
