@@ -1,47 +1,12 @@
 const express = require('express');
 const Client = require('../models/Client');
 
-const defaultClients = [
-  {
-    _id: 'default-cl-1',
-    companyName: 'BrightWave Solutions',
-    ceo: 'Ananya Sharma',
-    ongoingProjects: 5,
-    completedProjects: 12,
-    description: 'A digital transformation partner for creative agencies and startups.'
-  },
-  {
-    _id: 'default-cl-2',
-    companyName: 'NovaTech Systems',
-    ceo: 'Rohan Verma',
-    ongoingProjects: 3,
-    completedProjects: 8,
-    description: 'Enterprise software and cloud migration specialists.'
-  },
-  {
-    _id: 'default-cl-3',
-    companyName: 'Apex Finance Group',
-    ceo: 'Meera Joshi',
-    ongoingProjects: 2,
-    completedProjects: 5,
-    description: 'Financial services and analytics platform provider.'
-  },
-  {
-    _id: 'default-cl-4',
-    companyName: 'PixelPulse Media',
-    ceo: 'Kabir Malik',
-    ongoingProjects: 4,
-    completedProjects: 10,
-    description: 'Full-service digital marketing and web experience agency.'
-  }
-];
-
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
     const clients = await Client.find().sort({ companyName: 1 });
-    res.json(clients.length ? clients : defaultClients);
+    res.json(clients);
   } catch (error) {
     res.status(500).json({ message: 'Unable to load clients', error });
   }

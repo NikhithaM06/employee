@@ -50,30 +50,25 @@ export default function Services() {
           <p className="mt-2">There are currently no services configured. Seed the backend or add services to the database.</p>
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {services.map((service) => (
-            <div key={service._id} className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
-              <div className={`h-2 bg-gradient-to-r ${serviceAccent[service.name] || 'from-slate-500'} to-slate-900`} />
-              <div className="p-6">
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-100 text-2xl font-semibold text-slate-950">
-                    {service.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-950">{service.name}</h3>
-                    <p className="text-sm text-slate-500">{service.description}</p>
-                  </div>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-3xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Active projects</p>
-                    <p className="mt-3 text-2xl font-semibold text-slate-950">{service.activeProjects}</p>
-                  </div>
-                  <div className="rounded-3xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Completed</p>
-                    <p className="mt-3 text-2xl font-semibold text-slate-950">{service.completedProjects}</p>
-                  </div>
-                </div>
+            <div key={service._id} className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm flex flex-col items-center justify-center p-6 text-center hover:-translate-y-1 hover:shadow-md transition aspect-square relative">
+              <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${serviceAccent[service.name] || 'from-slate-500'} to-slate-400 opacity-50`} />
+              
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-2xl font-bold text-slate-700 mb-3 group-hover:bg-slate-100 transition">
+                {service.name.charAt(0)}
+              </div>
+              <h3 className="text-sm font-semibold text-slate-950 truncate w-full px-2">{service.name}</h3>
+              
+              <div className="mt-auto w-full pt-3 border-t border-slate-100 flex justify-between px-2">
+                 <div className="text-center">
+                    <p className="text-[9px] uppercase tracking-widest text-slate-400">Act</p>
+                    <p className="text-xs font-semibold text-slate-700">{service.activeProjects}</p>
+                 </div>
+                 <div className="text-center">
+                    <p className="text-[9px] uppercase tracking-widest text-slate-400">Done</p>
+                    <p className="text-xs font-semibold text-slate-700">{service.completedProjects}</p>
+                 </div>
               </div>
             </div>
           ))}

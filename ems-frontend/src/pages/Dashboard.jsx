@@ -147,7 +147,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Dashboard</p>
-            <h1 className="mt-3 text-3xl font-semibold text-slate-950">Welcome back, Admin</h1>
+            <h1 className="mt-3 text-3xl font-semibold text-slate-950">Welcome back!</h1>
           </div>
           <p className="max-w-xl text-sm text-slate-600">
             This shows employee performance, department breakdown, and headcount trends for the current year.

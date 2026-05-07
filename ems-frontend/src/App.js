@@ -13,15 +13,13 @@ import AddEmployee from './pages/AddEmployee';
 import Clients from './pages/Clients';
 import Services from './pages/Services';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import EmployeeHome from './pages/EmployeeHome';
 import Spinner from './components/Spinner';
-
-
 
 function AuthRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
-  return !user ? children : <Navigate to="/dashboard" replace />;
+  return !user ? children : <Navigate to={user.role === 'admin' ? "/dashboard" : "/home"} replace />;
 }
 
 function AppContent() {
@@ -51,16 +49,26 @@ function AppContent() {
               </header>
               <main className="flex-1 p-4 md:p-6 lg:p-8">
                 <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/employees" element={<Employees />} />
-                  <Route path="/employees/new" element={<AddEmployee />} />
-                  <Route path="/employees/:id" element={<EmployeeDetail />} />
-                  <Route path="/manage-employees" element={<ManageEmployees />} />
-                  <Route path="/past-employees" element={<PastEmployees />} />
-                  <Route path="/clients" element={<Clients />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  {user.role === 'admin' ? (
+                    <>
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/employees" element={<Employees />} />
+                      <Route path="/employees/new" element={<AddEmployee />} />
+                      <Route path="/employees/:id" element={<EmployeeDetail />} />
+                      <Route path="/manage-employees" element={<ManageEmployees />} />
+                      <Route path="/past-employees" element={<PastEmployees />} />
+                      <Route path="/clients" element={<Clients />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                    </>
+                  ) : (
+                    <>
+                      <Route path="/home" element={<EmployeeHome />} />
+                      <Route path="/" element={<Navigate to="/home" replace />} />
+                      <Route path="*" element={<Navigate to="/home" replace />} />
+                    </>
+                  )}
                 </Routes>
               </main>
             </div>
@@ -68,7 +76,7 @@ function AppContent() {
         ) : (
           <Routes>
             <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-            <Route path="/register" element={<AuthRoute><Register /></AuthRoute>} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         )}

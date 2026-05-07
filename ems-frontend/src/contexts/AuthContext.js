@@ -42,12 +42,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, role = 'user') => {
     try {
-      const res = await axios.post('/api/auth/register', { email, password, role });
-      const { token, user } = res.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      setUser(user);
+      await axios.post('/api/auth/register', { email, password, role });
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || error.message || 'Registration failed';
