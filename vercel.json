@@ -10,7 +10,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://ems-backend-5r5w.onrender.com/api/$1"
+      "destination": "https://ems-backend-g456.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",

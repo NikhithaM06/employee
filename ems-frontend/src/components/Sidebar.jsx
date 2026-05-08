@@ -15,14 +15,14 @@ export default function Sidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+          className="fixed inset-0 z-40 bg-black bg-opacity-50"
           onClick={onClose}
         />
       )}
-      <aside className={`w-full md:w-72 flex-shrink-0 bg-white text-slate-900 border-r border-slate-200 md:min-h-screen fixed md:static top-0 left-0 h-full z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300`}>
+      <aside className={`w-72 flex-shrink-0 bg-white text-slate-900 border-r border-slate-200 min-h-screen fixed top-0 left-0 h-full z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300`}>
         <div className="mx-auto flex max-w-md flex-col gap-6 px-5 py-8 md:px-6 h-full">
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500 text-xl font-semibold text-white shadow-sm">

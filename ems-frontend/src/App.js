@@ -34,8 +34,8 @@ function AppContent() {
           <div className="flex min-h-screen">
             <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
             <div className="flex-1 flex flex-col">
-              {/* Mobile header */}
-              <header className="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between">
+              {/* Header */}
+              <header className="bg-white border-b border-slate-200 p-4 flex items-center justify-between">
                 <button
                   onClick={() => setIsMobileMenuOpen(true)}
                   className="p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100"

@@ -121,7 +121,6 @@ export default function ManageEmployees() {
 
     setCredentialLoading(true);
     try {
-      const token = localStorage.getItem('token');
       const response = await apiFetch('/api/auth/create-employee-account', {
         method: 'POST',
         body: JSON.stringify({
@@ -190,65 +189,77 @@ export default function ManageEmployees() {
           <p className="mt-2">Try a different filter or refresh the page.</p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-[28px] border border-slate-200 bg-white shadow-sm">
-          <table className="min-w-full divide-y divide-slate-200 text-left">
-            <thead className="bg-slate-50 text-sm uppercase tracking-[0.12em] text-slate-500">
-              <tr>
-                <th className="px-5 py-4">Name</th>
-                <th className="px-5 py-4">Domain</th>
-                <th className="px-5 py-4">Salary</th>
-                <th className="px-5 py-4">Status</th>
-                <th className="px-5 py-4">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 bg-white text-sm text-slate-700">
-              {filteredEmployees.map((employee) => (
-                <tr key={employee._id} className="hover:bg-slate-50">
-                  <td className="px-5 py-4">
-                    <div className="font-medium text-slate-900">{employee.name}</div>
-                    <div className="text-xs text-slate-500">{employee.previousCompany || 'No previous company'}</div>
-                  </td>
-                  <td className="px-5 py-4">{employee.domain}</td>
-                  <td className="px-5 py-4">₹{employee.salary.toLocaleString('en-IN')}</td>
-                  <td className="px-5 py-4">
-                    <span className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredEmployees.map((employee) => (
+            <div
+              key={employee._id}
+              className="group relative flex flex-col rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50"
+            >
+              <div className="mb-5 flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-emerald-600">
+                    {employee.name}
+                  </h3>
+                  <p className="text-sm font-medium text-slate-500">
+                    {employee.domain}
+                  </p>
+                </div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-xl font-bold text-emerald-600">
+                  {employee.name ? employee.name.charAt(0).toUpperCase() : '?'}
+                </div>
+              </div>
+
+              <div className="mb-6 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Salary</p>
+                  <p className="mt-0.5 font-semibold text-slate-800">₹{employee.salary?.toLocaleString('en-IN')}</p>
+                </div>
+                <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Status</p>
+                  <div className="mt-0.5">
+                    <span className="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
                       {employee.status}
                     </span>
-                  </td>
-                  <td className="px-5 py-4 space-x-2">
-                    <button
-                      type="button"
-                      onClick={() => openEdit(employee)}
-                      className="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(employee._id)}
-                      className="rounded-full border border-red-100 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleMarkPast(employee._id)}
-                      className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200"
-                    >
-                      Mark as Past
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => openCredentialModal(employee)}
-                      className="rounded-full border border-purple-100 bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700 transition hover:bg-purple-100 mt-2 xl:mt-0"
-                    >
-                      Create Login
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto flex flex-col gap-2 pt-4 border-t border-slate-100">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => openEdit(employee)}
+                    className="flex-1 rounded-2xl bg-blue-50 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(employee._id)}
+                    className="flex-1 rounded-2xl bg-red-50 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleMarkPast(employee._id)}
+                    className="flex-1 rounded-2xl bg-slate-100 py-2.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-200"
+                  >
+                    Mark as Past
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openCredentialModal(employee)}
+                    className="flex-1 rounded-2xl bg-purple-50 py-2.5 text-xs font-semibold text-purple-700 transition hover:bg-purple-100"
+                  >
+                    Create Login
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
