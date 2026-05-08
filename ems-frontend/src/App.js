@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Sidebar from './components/Sidebar';
+import SidebarNew from './components/SidebarNew';
 import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
 import ManageEmployees from './pages/ManageEmployees';
@@ -24,7 +23,6 @@ function AuthRoute({ children }) {
 
 function AppContent() {
   const { user } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
@@ -32,22 +30,19 @@ function AppContent() {
         <ToastContainer position="top-right" theme="colored" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnHover />
         {user ? (
           <div className="flex min-h-screen">
-            <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-            <div className="flex-1 flex flex-col">
+            {/* Hover Expand Sidebar */}
+            <SidebarNew />
+            
+            {/* Main Content Area */}
+            <div className="ml-20 flex-1 flex flex-col">
               {/* Header */}
               <header className="bg-white border-b border-slate-200 p-4 flex items-center justify-between">
-                <button
-                  onClick={() => setIsMobileMenuOpen(true)}
-                  className="p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-                <span className="text-lg font-semibold text-slate-950">EMS</span>
+                <span className="text-lg font-semibold text-slate-950">EMS - Employee Management System</span>
                 <div></div> {/* Spacer */}
               </header>
-              <main className="flex-1 p-4 md:p-6 lg:p-8">
+              
+              {/* Main Routes */}
+              <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-auto">
                 <Routes>
                   {user.role === 'admin' ? (
                     <>
@@ -76,7 +71,6 @@ function AppContent() {
         ) : (
           <Routes>
             <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         )}

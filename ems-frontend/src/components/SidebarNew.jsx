@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 const navItems = [
-  { name: 'Dashboard', to: '/dashboard', icon: '📊' },
+  { name: 'Dashboard', to: '/dashboard', icon: '' },
   { name: 'Employees', to: '/employees', icon: '👥' },
   { name: 'Manage Employees', to: '/manage-employees', icon: '⚙️' },
   { name: 'Past Employees', to: '/past-employees', icon: '📁' },
