@@ -1,75 +1,95 @@
-# EMS - Employee Management System
+EMS - Employee Management System
 
-**A full-stack web application for managing employees, clients, and services with real-time analytics dashboard.**
+**A full-stack MERN application for managing employees, clients, and services with role-based authentication and real-time analytics dashboard.**
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
 ---
 
-## 🎯 Features
+**Features**
 
-### Core CRUD Operations
+**Authentication & Authorization**
 
-- Add Employees - Fill forms with all employee details (name, age, experience, salary, skills, image)
-- Edit Employees - Update any employee profile with validation
-- Delete Employees - Remove employees permanently from the database
-- Mark as Past - Transition active employees to past employees status
-- View Employee Details - Dedicated detail page with full profile info
-- Search & Filter - Real-time search by name and filter by domain
-- Create Login - Create mail and password for the users(employees)
+- Admin Login
+- Employee/User Login
+- JWT-based Authentication
+- Protected Routes
+- Role-Based Access Control (RBAC)
 
-### Clients Management
+**Admin Functionalities**
 
-- Add Clients - Create client records with company info
-- View Clients - Browse all clients with project metrics
-- Client Details Modal - Pop-up view of client information
+Admin has complete access to manage the system(Employee Management)
+- Add Employees
+- Edit Employee Details
+- Delete Employees
+- Mark Employees as Past Employees
+- View Employee Details
+- Search Employees
+- Filter Employees by Domain
 
-### Services Catalog
+**Login Management**
 
-- View Services - Display all service offerings
-- Service Metrics - Active and completed project counts per service
+- Create Employee Login Credentials
+- Manage Employee Access
 
-### Analytics Dashboard
+**Client Management**
 
-- Key Metrics - Total employees, past employees, clients, new hires this month
-- Monthly Headcount Chart - Bar graph showing employee additions by month
-- Department Breakdown - Pie chart showing team distribution
-- Real-time Updates - Stats update immediately when data changes
+- Add Clients
+- View Client Details
+- Manage Client Information
 
-### User Experience
+**Services Management**
 
-- Toast Notifications
-- Loading States
-- Responsive Design
-- Form Validation
+- View Service Details
+- Track Active & Completed Projects
 
----
+**Analytics Dashboard**
 
-## 🛠 Tech Stack
+- Total Employees Count
+- Past Employees Count
+- Total Clients
+- Monthly Hiring Statistics
+- Department-wise Employee Distribution
+- Real-time Dashboard Updates
 
-### Frontend
+**Employee/User Functionalities**
 
+Employees(Users) can:
+- Login using credentials created by admin
+- View company guidelines and rules
+- Access company-related information
+
+**Tech Stack Used**
+
+**Frontend**
 - React.js
-- React Router
+- React Router DOM
 - Tailwind CSS
+- Axios
 - Recharts
 
-### Backend
-
+**Backend**
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
+- JWT Authentication
+- bcrypt.js
+  
+**Installation & Setup**
 
----
-
-## 🚀 Installation & Setup
-
-### Backend
-
-```bash
-cd ems-backend
+**Backend**
+cd backend
 npm install
-node server.js
-```
+npm start
+
+**Frontend**
+cd frontend
+npm install
+npm run dev
+
+**Deployment**
+Frontend Deployment: Vercel
+Backend Deployment: Render
+Database: MongoDB Atlas
