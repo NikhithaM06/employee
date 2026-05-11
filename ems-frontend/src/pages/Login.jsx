@@ -25,7 +25,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const result = await login(email, password);
+    const result = await login(email.trim(), password);
     setLoading(false);
     if (result.success) {
       toast.success('Login successful');

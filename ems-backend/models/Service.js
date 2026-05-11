@@ -4,7 +4,6 @@ const serviceSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      enum: ['Apps', 'Websites', 'E-Commerce', 'Maintenance'],
       required: true
     },
     description: { type: String, default: '' },

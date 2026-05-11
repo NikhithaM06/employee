@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? process.env.REACT_APP_API_URL
-  : 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+console.log('AuthContext: API_BASE_URL is', API_BASE_URL);
 
 axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -31,7 +30,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post('/api/auth/login', { email, password });
+      console.log('Attempting login to:', `${API_BASE_URL}/api/auth/login`);
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true };
     } catch (error) {
+      console.error('Login error full details:', error);
       const message = error.response?.data?.message || error.message || 'Login failed';
       return { success: false, message };
     }
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, role = 'user') => {
     try {
-      await axios.post('/api/auth/register', { email, password, role });
+      await axios.post(`${API_BASE_URL}/api/auth/register`, { email, password, role });
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || error.message || 'Registration failed';

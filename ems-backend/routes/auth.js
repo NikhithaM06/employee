@@ -9,19 +9,20 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   try {
     const { email, password, role } = req.body;
+    const normalizedEmail = email?.trim().toLowerCase();
 
-    if (!email || !password) {
+    if (!normalizedEmail || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
     // Check if user exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     // Create user
-    const user = new User({ email, password, role });
+    const user = new User({ email: normalizedEmail, password, role });
     await user.save();
 
     // Generate token
@@ -71,13 +72,14 @@ router.post('/create-employee-account', auth, adminAuth, async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = email?.trim().toLowerCase();
 
-    if (!email || !password) {
+    if (!normalizedEmail || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
     // Find user and populate employee details to get the name
-    const user = await User.findOne({ email }).populate('employeeId');
+    const user = await User.findOne({ email: normalizedEmail }).populate('employeeId');
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }

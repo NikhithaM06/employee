@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Employee = require('../models/Employee');
+const Client = require('../models/Client');
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ router.get('/stats', async (req, res) => {
   try {
     const activeCount = await Employee.countDocuments({ status: 'active' });
     const pastCount = await Employee.countDocuments({ status: 'past' });
-    const clientsCount = null;
+    const clientsCount = await Client.countDocuments();
 
     const now = new Date();
     const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);

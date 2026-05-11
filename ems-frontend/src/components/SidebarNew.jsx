@@ -46,7 +46,7 @@ export default function Sidebar() {
                 `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'bg-cyan-600 text-white shadow-md'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-cyan-600'
                 } ${isExpanded ? 'justify-start' : 'justify-center'}`
               }
             >
@@ -59,12 +59,12 @@ export default function Sidebar() {
         {/* User Info & Logout */}
         <div className="space-y-3 border-t border-slate-700 pt-4">
           {isExpanded && user && (
-            <p className="text-xs text-slate-400 truncate px-2">Logged in as: {user.email}</p>
+            <p className="text-xs text-slate-500 truncate px-2 font-medium">Logged in as: {user.email}</p>
           )}
           <button
             onClick={handleLogout}
             title={!isExpanded ? 'Logout' : ''}
-            className={`w-full flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-red-300 hover:bg-red-900 hover:text-white transition-all duration-200 ${
+            className={`w-full flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-all duration-200 ${
               isExpanded ? 'justify-start' : 'justify-center'
             }`}
           >

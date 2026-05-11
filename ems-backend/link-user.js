@@ -5,7 +5,15 @@ require('dotenv').config();
 
 async function linkUser() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    let mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      // Fallback for local usage. Server.js already provides a default as well.
+      mongoUri = 'mongodb://localhost:27017/ems';
+    }
+    await mongoose.connect(mongoUri);
+
+
+
     
     // Find an employee
     const employee = await Employee.findOne({});
@@ -15,9 +23,10 @@ async function linkUser() {
     }
 
     // Find the user abcd1234@gmail.com
-    const user = await User.findOne({ email: 'abcd1234@gmail.com' });
+    const userEmail = process.env.LINK_USER_EMAIL || 'abcd1234@gmail.com';
+    const user = await User.findOne({ email: userEmail.toLowerCase() });
     if (!user) {
-      console.log("User abcd1234@gmail.com not found.");
+      console.log(`User ${userEmail} not found.`);
       return;
     }
 
@@ -28,8 +37,13 @@ async function linkUser() {
     console.log(`Successfully linked user ${user.email} to employee ${employee.name}`);
     
     // Test population
-    const populatedUser = await User.findOne({ email: 'abcd1234@gmail.com' }).populate('employeeId');
-    console.log(`Test: User ${populatedUser.email} has name: ${populatedUser.employeeId.name}`);
+    const populatedUser = await User.findOne({ email: userEmail.toLowerCase() }).populate('employeeId');
+    if (!populatedUser?.employeeId) {
+      console.log('Test: user linked but employee population failed.');
+    } else {
+      console.log(`Test: User ${populatedUser.email} has name: ${populatedUser.employeeId.name}`);
+    }
+
     
   } catch (err) {
     console.error(err);
