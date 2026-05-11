@@ -11,37 +11,38 @@
 
 ### Core CRUD Operations
 
-- ✅ Add Employees - Fill forms with all employee details (name, age, experience, salary, skills, image)
-- ✅ Edit Employees - Update any employee profile with validation
-- ✅ Delete Employees - Remove employees permanently from the database
-- ✅ Mark as Past - Transition active employees to past employees status
-- ✅ View Employee Details - Dedicated detail page with full profile info
-- ✅ Search & Filter - Real-time search by name and filter by domain
+- Add Employees - Fill forms with all employee details (name, age, experience, salary, skills, image)
+- Edit Employees - Update any employee profile with validation
+- Delete Employees - Remove employees permanently from the database
+- Mark as Past - Transition active employees to past employees status
+- View Employee Details - Dedicated detail page with full profile info
+- Search & Filter - Real-time search by name and filter by domain
+- Create Login - Create mail and password for the users(employees)
 
 ### Clients Management
 
-- ✅ Add Clients - Create client records with company info
-- ✅ View Clients - Browse all clients with project metrics
-- ✅ Client Details Modal - Pop-up view of client information
+- Add Clients - Create client records with company info
+- View Clients - Browse all clients with project metrics
+- Client Details Modal - Pop-up view of client information
 
 ### Services Catalog
 
-- ✅ View Services - Display all service offerings
-- ✅ Service Metrics - Active and completed project counts per service
+- View Services - Display all service offerings
+- Service Metrics - Active and completed project counts per service
 
 ### Analytics Dashboard
 
-- ✅ Key Metrics - Total employees, past employees, clients, new hires this month
-- ✅ Monthly Headcount Chart - Bar graph showing employee additions by month
-- ✅ Department Breakdown - Pie chart showing team distribution
-- ✅ Real-time Updates - Stats update immediately when data changes
+- Key Metrics - Total employees, past employees, clients, new hires this month
+- Monthly Headcount Chart - Bar graph showing employee additions by month
+- Department Breakdown - Pie chart showing team distribution
+- Real-time Updates - Stats update immediately when data changes
 
 ### User Experience
 
-- ✅ Toast Notifications
-- ✅ Loading States
-- ✅ Responsive Design
-- ✅ Form Validation
+- Toast Notifications
+- Loading States
+- Responsive Design
+- Form Validation
 
 ---
 
