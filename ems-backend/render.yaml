@@ -1,0 +1,15 @@
+services:
+  apiService:
+    type: web
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    region: oregon
+    envVars:
+      - key: MONGO_URI
+        value: "${MONGO_URI}"
+      - key: JWT_SECRET
+        value: "${JWT_SECRET}"
+      - key: CORS_ORIGIN
+        value: "https://ems-frontend.vercel.app"
